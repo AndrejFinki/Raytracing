@@ -1,8 +1,7 @@
 #ifndef IMAGE_CPP
 #define IMAGE_CPP
 
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
 
 class Image { public:
 
