@@ -22,6 +22,10 @@ class Image { public:
 		std::cout << ppm_type << "\n" << image_width << " " << image_height << "\n" << image_max_color << "\n";
 	}
 
+	static void draw_next_pixel( color pixel_color ){
+		Image::draw_next_pixel_d( pixel_color.x(), pixel_color.y(), pixel_color.z() );
+	}
+
 	static void draw_next_pixel_d( double r, double g, double b ){
 		Image::draw_next_pixel_i( color_d_to_i(r,image_max_color), color_d_to_i(g,image_max_color), color_d_to_i(b,image_max_color) );
 	}

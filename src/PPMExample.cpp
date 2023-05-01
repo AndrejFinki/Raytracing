@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "Image.cpp"
+#include "vec3.cpp"
 
 int main(){
 
@@ -12,7 +13,7 @@ int main(){
 		double g = double( j ) / ( Image::image_height-1 );
 		double b = 0.5;
 
-		Image::draw_next_pixel_d( r, g, b );
+		Image::draw_next_pixel( color( r, g, b ) );
     
 	}
 
