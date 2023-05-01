@@ -1,27 +1,25 @@
-#include <iostream>
+#include <bits/stdc++.h>
+#include "ImageFormat.cpp"
 
-int main() {
+const double ERR = 1e-5;
 
-    // Image
+int main(){
 
-    const int image_width = 256;
-    const int image_height = 256;
+	ImageFormat::initialize_ppm( "P3", 256, 256, 255 );
+	ImageFormat::print_ppm();
 
-    // Render
+	for( int j = ImageFormat::image_height-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < ImageFormat::image_width ; i++ ) {
+		
+		double r = double( i ) / ( ImageFormat::image_width-1 );
+		double g = double( j ) / ( ImageFormat::image_height-1 );
+		double b = 0.5;
 
-    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+		int ir = static_cast<int>( r * 256 - ERR );
+		int ig = static_cast<int>( g * 256 - ERR );
+		int ib = static_cast<int>( b * 256 - ERR );
 
-    for (int j = image_height-1; j >= 0; --j) {
-        for (int i = 0; i < image_width; ++i) {
-            auto r = double(i) / (image_width-1);
-            auto g = double(j) / (image_height-1);
-            auto b = 0.25;
+		std::cout << ir << ' ' << ig << ' ' << ib << "\n";
+    
+	}
 
-            int ir = static_cast<int>(255.999 * r);
-            int ig = static_cast<int>(255.999 * g);
-            int ib = static_cast<int>(255.999 * b);
-
-            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
-        }
-    }
 }
