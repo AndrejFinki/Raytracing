@@ -1,4 +1,3 @@
-#include <bits/stdc++.h>
 #include "Image.cpp"
 
 const double ERR = 1e-5;

@@ -1,6 +1,10 @@
-#include <bits/stdc++.h>
+#ifndef IMAGE_CPP
+#define IMAGE_CPP
 
-struct Image {
+#include <iostream>
+#include <string>
+
+class Image { public:
 
 	static std::string ppm_type;
 	static int image_width;
@@ -28,3 +32,5 @@ std::string Image::ppm_type = "";
 int Image::image_height = 0;
 int Image::image_width = 0;
 int Image::image_max_color = 0;
+
+#endif
