@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 #include "Image.cpp"
 
-const double ERR = 1e-5;
-
 int main(){
 
 	Image::initialize_ppm( "P3", 256, 256, 255 );
@@ -14,11 +12,7 @@ int main(){
 		double g = double( j ) / ( Image::image_height-1 );
 		double b = 0.5;
 
-		int ir = static_cast<int>( r * 256 - ERR );
-		int ig = static_cast<int>( g * 256 - ERR );
-		int ib = static_cast<int>( b * 256 - ERR );
-
-		Image::draw_next_pixel( ir, ig, ib );
+		Image::draw_next_pixel_d( r, g, b );
     
 	}
 

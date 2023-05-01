@@ -2,6 +2,7 @@
 #define IMAGE_CPP
 
 #include <bits/stdc++.h>
+#include "color.cpp"
 
 class Image { public:
 
@@ -21,7 +22,11 @@ class Image { public:
 		std::cout << ppm_type << "\n" << image_width << " " << image_height << "\n" << image_max_color << "\n";
 	}
 
-	static void draw_next_pixel( int r, int g, int b ){
+	static void draw_next_pixel_d( double r, double g, double b ){
+		Image::draw_next_pixel_i( color_d_to_i(r,image_max_color), color_d_to_i(g,image_max_color), color_d_to_i(b,image_max_color) );
+	}
+
+	static void draw_next_pixel_i( int r, int g, int b ){
 		std::cout << r << " " << g << " " << b << "\n";
 	}
 
