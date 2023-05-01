@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
-#include "ImageFormat.cpp"
+#include "Image.cpp"
 
 const double ERR = 1e-5;
 
 int main(){
 
-	ImageFormat::initialize_ppm( "P3", 256, 256, 255 );
-	ImageFormat::print_ppm();
+	Image::initialize_ppm( "P3", 256, 256, 255 );
+	Image::print_ppm();
 
-	for( int j = ImageFormat::image_height-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < ImageFormat::image_width ; i++ ) {
+	for( int j = Image::image_height-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < Image::image_width ; i++ ) {
 		
-		double r = double( i ) / ( ImageFormat::image_width-1 );
-		double g = double( j ) / ( ImageFormat::image_height-1 );
+		double r = double( i ) / ( Image::image_width-1 );
+		double g = double( j ) / ( Image::image_height-1 );
 		double b = 0.5;
 
 		int ir = static_cast<int>( r * 256 - ERR );

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-struct ImageFormat {
+struct Image {
 
 	static std::string ppm_type;
 	static int image_width;
@@ -8,10 +8,10 @@ struct ImageFormat {
 	static int image_max_color;
 
 	static void initialize_ppm( const std::string &ppm_type, const int &image_width, const int &image_height, const int &image_max_color ){
-		ImageFormat::ppm_type = ppm_type;
-		ImageFormat::image_height = image_height;
-		ImageFormat::image_width = image_width;
-		ImageFormat::image_max_color = image_max_color;
+		Image::ppm_type = ppm_type;
+		Image::image_height = image_height;
+		Image::image_width = image_width;
+		Image::image_max_color = image_max_color;
 	}
 
 	static void print_ppm(){
@@ -20,7 +20,7 @@ struct ImageFormat {
 
 };
 
-std::string ImageFormat::ppm_type = "";
-int ImageFormat::image_height = 0;
-int ImageFormat::image_width = 0;
-int ImageFormat::image_max_color = 0;
+std::string Image::ppm_type = "";
+int Image::image_height = 0;
+int Image::image_width = 0;
+int Image::image_max_color = 0;
