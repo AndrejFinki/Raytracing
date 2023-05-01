@@ -18,6 +18,10 @@ struct Image {
 		std::cout << ppm_type << "\n" << image_width << " " << image_height << "\n" << image_max_color << "\n";
 	}
 
+	static void draw_next_pixel( int r, int g, int b ){
+		std::cout << r << " " << g << " " << b << "\n";
+	}
+
 };
 
 std::string Image::ppm_type = "";
