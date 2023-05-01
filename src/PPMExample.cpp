@@ -18,7 +18,7 @@ int main(){
 		int ig = static_cast<int>( g * 256 - ERR );
 		int ib = static_cast<int>( b * 256 - ERR );
 
-		std::cout << ir << ' ' << ig << ' ' << ib << "\n";
+		Image::draw_next_pixel( ir, ig, ib );
     
 	}
 
