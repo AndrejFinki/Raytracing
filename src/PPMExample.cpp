@@ -1,19 +1,23 @@
 #include <bits/stdc++.h>
-#include "Image.cpp"
-#include "vec3.cpp"
+#include "ppm.h"
+#include "vec3.h"
+#include "color.h"
+
+const int IMAGE_WIDTH = 256;
+const int IMAGE_HEIGHT = 256;
+const int IMAGE_MAX_VALUE = 255;
 
 int main(){
 
-	Image::initialize_ppm( "P3", 256, 256, 255 );
-	Image::print_ppm();
+	PPM::initialize_ppm( "P3", IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_MAX_VALUE );
 
-	for( int j = Image::image_height-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < Image::image_width ; i++ ) {
+	for( int j = IMAGE_HEIGHT-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < IMAGE_WIDTH ; i++ ) {
 		
-		double r = double( i ) / ( Image::image_width-1 );
-		double g = double( j ) / ( Image::image_height-1 );
-		double b = 0.5;
+		double r = double( i ) / ( IMAGE_WIDTH-1 );
+		double g = double( j ) / ( IMAGE_HEIGHT-1 );
+		double b = 0.75;
 
-		Image::draw_next_pixel( color( r, g, b ) );
+		write_color( std::cout, color( r, g, b ) );
     
 	}
 
