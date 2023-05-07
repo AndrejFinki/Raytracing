@@ -13,8 +13,8 @@ int main(){
 
 	for( int j = IMAGE_HEIGHT-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < IMAGE_WIDTH ; i++ ) {
 		
-		double r = double( i ) / ( IMAGE_WIDTH-1 );
-		double g = double( j ) / ( IMAGE_HEIGHT-1 );
+		double r = double(i) / ( IMAGE_WIDTH-1 );
+		double g = double(j) / ( IMAGE_HEIGHT-1 );
 		double b = 0.75;
 
 		write_color( std::cout, color( r, g, b ) );
