@@ -43,12 +43,12 @@ int main(){
 double sphere_hit( const point3 &center, const double &radius, const ray &r ){
 	
 	vec3 oc = r.origin() - center;
-	double a = dot( r.direction(), r.direction() );
-	double b = 2 * dot( oc, r.direction() );
-	double c = dot( oc, oc ) - radius*radius;
-	double D = b*b - 4*a*c;
+	double a = r.direction().length_squared();
+	double hb = dot( oc, r.direction() );
+	double c = oc.length_squared() - radius*radius;
+	double D = hb*hb - a*c;
 	if( D < 0 ) return -1;
-	return ( -b - sqrt( D ) ) / (2*a);
+	return ( -hb - sqrt( D ) ) / a;
 
 }
 
