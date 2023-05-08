@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+#include "rtweekend.h"
+#include "hittable_list.h"
+#include "sphere.h"
 #include "ppm.h"
 #include "vec3.h"
 #include "color.h"
@@ -9,12 +12,14 @@ const int IMAGE_WIDTH = 1920;
 const int IMAGE_HEIGHT = int( IMAGE_WIDTH / ASPECT_RATIO );
 const int IMAGE_MAX_VALUE = 255;
 
-color ray_color( const ray & );
-double sphere_hit( const point3 &, const double &, const ray & );
-
+color ray_color( const ray &, const hittable & );
 int main(){
 
 	PPM::initialize_ppm( "P3", IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_MAX_VALUE );
+
+	hittable_list world;
+	world.add( make_shared<sphere>( point3( 0, 0, -1 ), 0.5 ) );
+	world.add( make_shared<sphere>( point3( 0, -100.5, -1 ), 100 ) );
 
 	double viewport_height = 2;
 	double viewport_width = viewport_height * ASPECT_RATIO;
@@ -32,7 +37,7 @@ int main(){
 
 		ray r( origin, lower_left_corner + u*horizontal + v*vertical - origin );
 
-		color pixel_color = ray_color(r);
+		color pixel_color = ray_color( r, world );
 
 		write_color( std::cout, pixel_color );
 
@@ -40,29 +45,13 @@ int main(){
 
 }
 
-double sphere_hit( const point3 &center, const double &radius, const ray &r ){
-	
-	vec3 oc = r.origin() - center;
-	double a = r.direction().length_squared();
-	double hb = dot( oc, r.direction() );
-	double c = oc.length_squared() - radius*radius;
-	double D = hb*hb - a*c;
-	if( D < 0 ) return -1;
-	return ( -hb - sqrt( D ) ) / a;
+color ray_color( const ray &r, const hittable &world ){
 
-}
-
-color ray_color( const ray &r ){
-
-	double t = sphere_hit( point3( 0, 0, -1 ), 0.5, r );
-
-	if( t > 0 ){
-		vec3 normal = unit_vector( r.at(t) - vec3( 0, 0, -1 ) );
-		return 0.5 * color( normal + vec3( 1, 1, 1 ) );
-	}
+	hit_record record;
+	if( world.hit( r, 0, infinity, record ) ) return 0.5 * ( record.normal + color( 1, 1, 1 ) );
 
 	vec3 unit_direction = unit_vector( r.direction() );
-	t = 0.5 * ( unit_direction.y() + 1 );
+	double t = 0.5 * ( unit_direction.y() + 1 );
 	return ( 1 - t )*color( 1, 1, 1 ) + t*color( 0.3, 0.5, 1 );
 
 }
