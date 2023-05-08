@@ -5,10 +5,11 @@
 #include "ray.h"
 
 const double ASPECT_RATIO = 16.0/9.0;
-const int IMAGE_WIDTH = 256;
+const int IMAGE_WIDTH = 1920;
 const int IMAGE_HEIGHT = int( IMAGE_WIDTH / ASPECT_RATIO );
 const int IMAGE_MAX_VALUE = 255;
 
+bool hits_sphere( const point3 &, const double &, const ray & );
 color ray_color( const ray & );
 
 int main(){
@@ -39,7 +40,20 @@ int main(){
 
 }
 
+bool hits_sphere( const point3 &center, const double &radius, const ray &r ){
+	
+	vec3 oc = r.origin() - center;
+	double a = dot( r.direction(), r.direction() );
+	double b = 2 * dot( oc, r.direction() );
+	double c = dot( oc, oc ) - radius*radius;
+	double D = b*b - 4*a*c;
+	return D > 0;
+
+}
+
 color ray_color( const ray &r ){
+
+	if( hits_sphere( point3( 0, 0, -1 ), 0.5, r ) ) return color( 1, 0, 0 );
 
 	vec3 unit_direction = unit_vector( r.direction() );
 	double t = 0.5 * ( unit_direction.y() + 1 );
