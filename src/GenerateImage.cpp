@@ -9,8 +9,8 @@ const int IMAGE_WIDTH = 1920;
 const int IMAGE_HEIGHT = int( IMAGE_WIDTH / ASPECT_RATIO );
 const int IMAGE_MAX_VALUE = 255;
 
-bool hits_sphere( const point3 &, const double &, const ray & );
 color ray_color( const ray & );
+double sphere_hit( const point3 &, const double &, const ray & );
 
 int main(){
 
@@ -40,23 +40,29 @@ int main(){
 
 }
 
-bool hits_sphere( const point3 &center, const double &radius, const ray &r ){
+double sphere_hit( const point3 &center, const double &radius, const ray &r ){
 	
 	vec3 oc = r.origin() - center;
 	double a = dot( r.direction(), r.direction() );
 	double b = 2 * dot( oc, r.direction() );
 	double c = dot( oc, oc ) - radius*radius;
 	double D = b*b - 4*a*c;
-	return D > 0;
+	if( D < 0 ) return -1;
+	return ( -b - sqrt( D ) ) / (2*a);
 
 }
 
 color ray_color( const ray &r ){
 
-	if( hits_sphere( point3( 0, 0, -1 ), 0.5, r ) ) return color( 1, 0, 0 );
+	double t = sphere_hit( point3( 0, 0, -1 ), 0.5, r );
+
+	if( t > 0 ){
+		vec3 normal = unit_vector( r.at(t) - vec3( 0, 0, -1 ) );
+		return 0.5 * color( normal + vec3( 1, 1, 1 ) );
+	}
 
 	vec3 unit_direction = unit_vector( r.direction() );
-	double t = 0.5 * ( unit_direction.y() + 1 );
+	t = 0.5 * ( unit_direction.y() + 1 );
 	return ( 1 - t )*color( 1, 1, 1 ) + t*color( 0.3, 0.5, 1 );
 
 }
