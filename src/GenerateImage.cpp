@@ -9,27 +9,27 @@
 #include "camera.h"
 #include "material.h"
 
-const double ASPECT_RATIO = 3.0/2.0;
-const int IMAGE_WIDTH = 800;
+const double ASPECT_RATIO = 16.0/9.0;
+const int IMAGE_WIDTH = 720;
 const int IMAGE_HEIGHT = int( IMAGE_WIDTH / ASPECT_RATIO );
 const int IMAGE_MAX_VALUE = 255;
 const int SAMPLES_PER_PIXEL = 5;
 const int MAX_DEPTH = 5;
 
-
+hittable_list project_scene();
 hittable_list random_scene();
 color ray_color( const ray &, const hittable &, int );
 int main(){
 
 	PPM::initialize_ppm( "P3", IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_MAX_VALUE );
 
-	hittable_list world = random_scene();
+	hittable_list world = project_scene();
 
-    point3 lookfrom(13,2,3);
+    point3 lookfrom(20,7,30);
     point3 lookat(0,0,0);
     vec3 vup(0,1,0);
-    auto dist_to_focus = 10.0;
-    auto aperture = 0.1;
+    auto dist_to_focus = 30.0;
+    auto aperture = 0;
     camera cam(lookfrom, lookat, vup, 20, ASPECT_RATIO, aperture, dist_to_focus);
 
 	int last_scanline = IMAGE_HEIGHT-1;
@@ -69,9 +69,36 @@ color ray_color( const ray &r, const hittable &world, int depth ){
 
 	vec3 unit_direction = unit_vector( r.direction() );
 	double t = 0.5 * ( unit_direction.y() + 1 );
-	return ( 1 - t )*color( 1, 1, 1 ) + t*color( 0.3, 0.5, 1 );
+	return ( 1 - t )*color( 1, 1, 1 ) + t*color( 0, 0, 0 );
 
 }
+
+hittable_list project_scene() {
+    hittable_list world;
+
+    auto ground_material = make_shared<dielectric>(1.5);
+    world.add(make_shared<sphere>(point3(0,-1000,0), 1000, ground_material));
+
+	const double angle_inc = 45;
+	double angle = 0;
+	for( int i = 0 ; i < 15 ; i++ ){
+		auto ball = make_shared<lambertian>(color(1,0,0));
+		world.add( make_shared<sphere>( point3( i + cos(degrees_to_radians(angle)), 0, i + sin(degrees_to_radians(angle)) ), 0.5, ball ) );
+		angle += angle_inc;
+	}
+
+    // auto material1 = make_shared<dielectric>(1.5);
+    // world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
+
+    // auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
+    // world.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
+
+    // auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
+    // world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
+
+    return world;
+}
+
 
 hittable_list random_scene() {
     hittable_list world;
