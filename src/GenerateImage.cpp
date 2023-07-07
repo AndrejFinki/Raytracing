@@ -77,6 +77,9 @@ hittable_list project_scene() {
 
     hittable_list world;
 
+	auto ground_material = make_shared<metal>( color( 0.9, 0.9, 0.9 ), 0.0 );
+    world.add( make_shared<sphere>( point3( 0, -1000, 0), 1000, ground_material ) );
+
 	const double ANGLE_INC = 3 * M_PI;
 	const double HALF_POINTS = 100;	
 	const double CENTER_POINT_Y = 1.1 * sqrt( HALF_POINTS );
@@ -88,7 +91,7 @@ hittable_list project_scene() {
 										1.3*sqrt(i),
 										sqrt(i) * sin( degrees_to_radians( angle ) ) ),
 										0.5,
-										make_shared<lambertian>( color( 1, 0, 0 ) )
+										make_shared<lambertian>( color( 1, std::max( (double)0.0, cos( degrees_to_radians( angle ) ) ), std::max( (double)0.0, -sin( degrees_to_radians( angle ) ) ) ) )
 		) );
 
 	}
@@ -98,7 +101,7 @@ hittable_list project_scene() {
 										1.3*sqrt(i),
 										sqrt(201-i) * sin( degrees_to_radians( angle ) ) ),
 										0.5,
-										make_shared<lambertian>( color( 1, 0, 0 ) )
+										make_shared<lambertian>( color( 1, std::max( (double)0.0, -cos( degrees_to_radians( angle ) ) ), std::max( (double)0.0, sin( degrees_to_radians( angle ) ) ) ) )
 		) );
 
 	}
