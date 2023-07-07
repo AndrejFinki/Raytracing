@@ -10,11 +10,11 @@
 #include "material.h"
 
 const double ASPECT_RATIO = 16.0/9.0;
-const int IMAGE_WIDTH = 720;
+const int IMAGE_WIDTH = 1920;
 const int IMAGE_HEIGHT = int( IMAGE_WIDTH / ASPECT_RATIO );
 const int IMAGE_MAX_VALUE = 255;
-const int SAMPLES_PER_PIXEL = 5;
-const int MAX_DEPTH = 5;
+const int SAMPLES_PER_PIXEL = 500;
+const int MAX_DEPTH = 50;
 
 hittable_list project_scene();
 hittable_list random_scene();
@@ -35,7 +35,7 @@ int main(){
 	int last_scanline = IMAGE_HEIGHT-1;
 	for( int j = IMAGE_HEIGHT-1 ; j >= 0 ; j-- ) for( int i = 0 ; i < IMAGE_WIDTH ; i++ ){
 
-		if( j+10 < last_scanline ){
+		if( j < last_scanline ){
 			last_scanline = j;
 			std::cerr << "Scanlines remaining: " << j << std::endl;
 		}
